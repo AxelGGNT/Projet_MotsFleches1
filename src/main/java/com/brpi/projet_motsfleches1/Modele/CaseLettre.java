@@ -1,14 +1,22 @@
 package com.brpi.projet_motsfleches1.Modele;
 
-public class CaseLettre {
-    String lettre;
-
-    // Getters & Setters
-    public String getLettre() {
+/**
+ * Classe CaseLettre -  Héritée de Case, gère les cases contenant des lettres (non Def)
+ */
+public class CaseLettre implements Case {
+    char lettre;
+    public char getLettre() {
         return lettre;
     }
+    public String getLibelle(){
+        return Character.toString(lettre);
+    }
 
-    public void setLettre(String lettre) {
+    /**
+     * Constructeur de la classe CaseLettre
+     * @param lettre
+     */
+    public CaseLettre(char lettre){
         this.lettre = lettre;
     }
 }

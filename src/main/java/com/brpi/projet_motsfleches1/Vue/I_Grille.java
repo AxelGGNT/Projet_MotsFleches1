@@ -2,9 +2,10 @@ package com.brpi.projet_motsfleches1.Vue;
 
 import com.brpi.projet_motsfleches1.Modele.Grille;
 
+/**
+ * Interface définissant les méthodes utilisées dans la classe grille graphique et le controleur
+ */
 public interface I_Grille {
     void sendMessage(String msg);
-    void ajouterDef(int x, int y, String libDef);
-    void supprimerDef(int x, int y);
     javafx.scene.Scene getScene();
 }

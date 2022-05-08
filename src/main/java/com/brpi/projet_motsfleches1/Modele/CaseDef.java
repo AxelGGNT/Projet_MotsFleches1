@@ -1,58 +1,25 @@
 package com.brpi.projet_motsfleches1.Modele;
 
-public class CaseDef {
-    int nbMots;
+/**
+ * Classe CaseDef -  Héritée de Case, gère les cases contenant des définitions
+ */
+public class CaseDef implements Case {
+    int nbDefs;
     int positionX;
     int positionY;
-    String def;
     String libelle;
-
-    public enum directionDef{
-        HAUT, BAS, GAUCHE, DROITE
-    }
 
     // Getters & Setters
     public int getNbMots() {
-        return nbMots;
+        return nbDefs;
     }
-
-    public int getPositionX() {
-        return positionX;
-    }
-
-    public void setPositionX(int positionX) {
-        this.positionX = positionX;
-    }
-
-    public int getPositionY() {
-        return positionY;
-    }
-
-    public void setPositionY(int positionY) {
-        this.positionY = positionY;
-    }
-
-    public void setNbMots(int nbMots) {
-        this.nbMots = nbMots;
-    }
-
-    public String getDef() {
-        return def;
-    }
-
-    public void setDef(String def) {
-        this.def = def;
-    }
-
     public String getLibelle() {
         return libelle;
     }
 
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
-
-    // Constructor
+    /**
+     * Constructeur de la classe CaseDef
+     */
     public CaseDef(int positionX, int positionY, String libelle) {
         this.positionX = positionX;
         this.positionY = positionY;

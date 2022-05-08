@@ -1,5 +1,8 @@
 package com.brpi.projet_motsfleches1.Modele;
 
+/**
+ * Classe Mot - Non utilisée
+ */
 public class Mot {
     int longueurMot;
     int positionDepartMot;
