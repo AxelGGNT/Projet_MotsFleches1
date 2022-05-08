@@ -44,7 +44,6 @@ public class Fichier {
 
 	/**
 	 * Liste de mots en fonction de la lettre de départ.
-	 * @return Liste de mots en fonction des paramétres passés
 	 */
 	public void afficherMots(){
 		System.out.println("Affichage des mots presents dans le dictionnaire");
@@ -56,7 +55,6 @@ public class Fichier {
 	/**
 	 * Liste de mots en fonction de la lettre de départ.
 	 * @param d
-	 * @return Liste de mots en fonction des paramétres passés
 	 */
 	public void afficherMotsDebut(String d){
 			System.out.printf("Affichage des mots commencant par %s%n", d);

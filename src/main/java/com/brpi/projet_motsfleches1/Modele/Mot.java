@@ -4,7 +4,7 @@ package com.brpi.projet_motsfleches1.Modele;
  * Classe Mot - Non utilisée
  */
 public class Mot {
-    int longueurMot;
+    /*int longueurMot;
     int positionDepartMot;
     int positionDef;
     String def;
@@ -61,5 +61,5 @@ public class Mot {
         this.positionDef = positionDef;
         this.def = def;
         this.libelleMot = libelleMot;
-    }
+    }*/
 }

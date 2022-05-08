@@ -100,29 +100,32 @@ public class Grille implements I_modeleGrille {
             // Horizontal (x) = gauche / droite | Vertical (y) = haut / bas
             // Si la direction choisie est verticale
             case "VD":
+                    y++;
                     for (int i = 0; i < mot.length(); i++) {
                         tabGrille[x][y + i] = new CaseLettre(mot.charAt(i));
                         System.out.println(getValueCase(x, y + i));
                     }
                 break;
             case "VI":
-                    for (int i = mot.length() - 1; i >= 0; i--) {
-                        System.out.println("dfgdfgf");
-                        tabGrille[x][y - i] = new CaseLettre(mot.charAt(i));
-                        System.out.println(getValueCase(x, y - i));
+                    x++;
+                    for (int i = 0; i < mot.length(); i++) {
+                        tabGrille[x][y + i] = new CaseLettre(mot.charAt(i));
+                        System.out.println(getValueCase(x, y + i));
                     }
                 break;
             // Sinon c'est horizontal
             case "HD":
+                    x++;
                     for (int i = 0; i < mot.length(); i++) {
                         tabGrille[x + i][y] = new CaseLettre(mot.charAt(i));
                         System.out.println(getValueCase(x + i, y));
                     }
                 break;
             default :
-                    for (int i = mot.length() - 1; i >= 0; i--) {
-                        tabGrille[x - i][y] = new CaseLettre(mot.charAt(i));
-                        System.out.println(getValueCase(x- i, y));
+                    y++;
+                    for (int i = 0; i < mot.length(); i++) {
+                        tabGrille[x + i][y] = new CaseLettre(mot.charAt(i));
+                        System.out.println(getValueCase(x + i, y));
                     }
         }
         notifyObservateur();
@@ -136,9 +139,9 @@ public class Grille implements I_modeleGrille {
      * @param libDef
      * @return Retourne un booleen en fonction du résultat
      */
-    public boolean ajouterDef(int x, int y, String libDef){
+    public boolean ajouterDef(int x, int y, String libDef, String direction){
         if(!(tabGrille[x][y] instanceof CaseLettre)) {
-            tabGrille[x][y] = new CaseDef(x, y, libDef);
+            tabGrille[x][y] = new CaseDef(x, y, libDef, direction);
             notifyObservateur();
             return true;
         }
@@ -153,6 +156,7 @@ public class Grille implements I_modeleGrille {
     public void supprimerDef(int x, int y){
         if (findCaseDef(x, y)){
             tabGrille[x][y] = null;
+            notifyObservateur();
         }
     }
 
@@ -177,25 +181,25 @@ public class Grille implements I_modeleGrille {
      * @return Un nombre de cases dispo
      */
     public int findCaseDispo(int x, int y, String direction){
-        int nbCasesDispo = 0;
-        switch (direction){
-            case "VD":
-                nbCasesDispo = (hauteur - 1) - y;
-                return nbCasesDispo;
-            case "VI":
-                nbCasesDispo = y;
-                return nbCasesDispo;
-            case "HD":
-                nbCasesDispo = (largeur - 1) - x;
-                return nbCasesDispo;
-            default:
-                nbCasesDispo = x;
-                return nbCasesDispo;
+        int nbCasesDispo;
+        if (direction.equals("VD") || direction.equals("VI")) {
+            nbCasesDispo = (hauteur - 1) - y;
+            if(direction.equals("VI")){
+                return nbCasesDispo + 1;
+            }
+            return nbCasesDispo;
+        }
+        else{
+            nbCasesDispo = (largeur - 1) - x;
+            if(direction.equals("HI")){
+                return nbCasesDispo + 1;
+            }
+            return nbCasesDispo;
         }
     }
 
     /**
-     * Regarde si il y a un croisement de mots
+     * Regarde si il y a un croisement de mots, méthode non finie et donc cas non géré
      * @param mot
      * @param x
      * @param y

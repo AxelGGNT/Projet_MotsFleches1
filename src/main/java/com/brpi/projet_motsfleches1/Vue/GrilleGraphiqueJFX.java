@@ -1,35 +1,27 @@
 package com.brpi.projet_motsfleches1.Vue;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import com.brpi.projet_motsfleches1.Contrôleur.Controleur;
-import com.brpi.projet_motsfleches1.Contrôleur.I_Controleur;
+import com.brpi.projet_motsfleches1.Controller.Controleur;
+import com.brpi.projet_motsfleches1.Controller.I_Controleur;
 import com.brpi.projet_motsfleches1.Modele.*;
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import com.brpi.projet_motsfleches1.Dico.Fichier;
-import com.brpi.projet_motsfleches1.Vue.I_Observateur;
-import java.util.Optional;
 
+
+/**
+ * Classe de définition de la grille graphique et des méthodes associées
+ */
 public class GrilleGraphiqueJFX implements I_Observateur, I_Grille, EventHandler<MouseEvent> {
 	private static final int HAUTEUR_MENU = 26;
 	private final int largeur;
@@ -89,7 +81,6 @@ public class GrilleGraphiqueJFX implements I_Observateur, I_Grille, EventHandler
 			tableau.add(jl);
 			layout.getChildren().add(jl);
 		}
-		
 	}
 
 	/**
@@ -102,7 +93,7 @@ public class GrilleGraphiqueJFX implements I_Observateur, I_Grille, EventHandler
 		label.setOpacity(100);
 		label.setBackground(Background.EMPTY);
 		label.setAlignment(Pos.BASELINE_CENTER);
-		label.setFont(new Font("Arial", TAILLECASE/2));
+		label.setFont(new Font("Arial", TAILLECASE/3));
 		label.setPrefSize(TAILLECASE , TAILLECASE );
 		label.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
 		return label;
@@ -120,7 +111,7 @@ public class GrilleGraphiqueJFX implements I_Observateur, I_Grille, EventHandler
 	        addTestMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 	        	@Override
 	        	public void handle(ActionEvent e) {
-					controller.ajouterMotCtrl("test", 0, 0,"H");
+					controller.ajouterMotCtrl("test", 0, 0,"HD");
 	        	}
 	        });
 	        addEssaiMenuItemOk = new MenuItem("Ajouter essai en 5,4 (ok)");
@@ -128,7 +119,7 @@ public class GrilleGraphiqueJFX implements I_Observateur, I_Grille, EventHandler
 	        addEssaiMenuItemOk.setOnAction(new EventHandler<ActionEvent>() {
 	        	@Override
 	        	public void handle(ActionEvent e) {
-					controller.ajouterMotCtrl("essai", 5, 4,"V");
+					controller.ajouterMotCtrl("essai", 5, 4,"VD");
 	        	}
 	        });
 	        addEssaiMenuItemKO = new MenuItem("Ajouter essai en 6,4 (KO)");
@@ -136,7 +127,7 @@ public class GrilleGraphiqueJFX implements I_Observateur, I_Grille, EventHandler
 	        addEssaiMenuItemKO.setOnAction(new EventHandler<ActionEvent>() {
 	        	@Override
 	        	public void handle(ActionEvent e) {
-					controller.ajouterMotCtrl("essai", 6, 4,"H");
+					controller.ajouterMotCtrl("essai", 6, 4,"Hd");
 	        	}
 	        });
 	        MenuItem exit = new MenuItem("Quitter");
@@ -171,15 +162,28 @@ public class GrilleGraphiqueJFX implements I_Observateur, I_Grille, EventHandler
 	@Override
 	public void update(Grille gv) {
 		Case[][] tabCases = gv.getTabGrille();
+		String direction;
 		for (int i=1;i<=hauteur * largeur;i++) {
 			for (int h = 0; h < gv.getHauteur(); h++) {
 				for (int l = 0; l < gv.getLargeur(); l++) {
 					if (tabCases[l][h] instanceof CaseLettre) {
 						tableau.get(h * gv.getLargeur() + l).setText(controller.getValeurCases(l,h));
+						tableau.get(h * gv.getLargeur() + l).setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 					}
 					else if (tabCases[l][h] instanceof CaseDef) {
-						tableau.get(h * gv.getLargeur() + l).setText(controller.getValeurCases(l,h));
-						tableau.get(h * gv.getLargeur() + l).setFont(new Font("Arial", TAILLECASE/8));
+						direction = ((CaseDef) tabCases[l][h]).getDirection();
+						switch (direction){
+							case "HD":
+								tableau.get(h * gv.getLargeur() + l).setText(controller.getValeurCases(l,h) + "\n" + "(Droite)");
+							case "HI":
+								tableau.get(h * gv.getLargeur() + l).setText(controller.getValeurCases(l,h) + "\n" + "(Droite - Bas)");
+							case "VD":
+								tableau.get(h * gv.getLargeur() + l).setText(controller.getValeurCases(l,h) + "\n" + "(Bas)");
+							default:
+								tableau.get(h * gv.getLargeur() + l).setText(controller.getValeurCases(l,h) + "\n" + "(Bas - Droite)");
+						}
+						tableau.get(h * gv.getLargeur() + l).setFont(new Font("Arial", TAILLECASE/7));
+						tableau.get(h * gv.getLargeur() + l).setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
 					}
 				}
 			}
@@ -220,6 +224,7 @@ public class GrilleGraphiqueJFX implements I_Observateur, I_Grille, EventHandler
 		ContextMenu menu = new ContextMenu();
 		MenuItem def = new MenuItem("Ajouter une définition");
 		MenuItem mot = new MenuItem("Ajouter un mot");
+		MenuItem suppr = new MenuItem("Supprimer une définition");
 		def.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
@@ -234,8 +239,16 @@ public class GrilleGraphiqueJFX implements I_Observateur, I_Grille, EventHandler
 				setMot(x, y);
 			}
 		});
+		suppr.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				System.out.printf("Cliquer sur le menu pour supprimer une définition.");
+				supprimerDef(x, y);
+			}
+		});
 		menu.getItems().add(def);
 		menu.getItems().add(mot);
+		menu.getItems().add(suppr);
 		return menu;
 	}
 
@@ -254,8 +267,18 @@ public class GrilleGraphiqueJFX implements I_Observateur, I_Grille, EventHandler
 
 		String result = dialog.getResult();
 
+		String[] directions = {"HD","HI","VD","VI"};
+		ChoiceDialog choixDirection = new ChoiceDialog(directions[0],directions);
+
+		choixDirection.setTitle("Choisir une direction");
+		choixDirection.setHeaderText(null);
+		choixDirection.setContentText("Choix: ");
+		choixDirection.showAndWait();
+
+		String choix = (String) choixDirection.getSelectedItem();
+
 		if(result != " "){
-			modele.ajouterDef(x,y,result);
+			modele.ajouterDef(x,y,result,choix);
 		};
 	}
 
@@ -290,6 +313,27 @@ public class GrilleGraphiqueJFX implements I_Observateur, I_Grille, EventHandler
 		System.out.println(result);
 		if(result != " "){
 			modele.ajouterMot(result,x,y,choix);
+		};
+	}
+
+	private void supprimerDef(int x, int y){
+		ChoiceDialog choixSuppr = new ChoiceDialog("Oui","Non");
+
+		choixSuppr.setTitle("Suppimer la définition ?");
+		choixSuppr.setHeaderText(null);
+		choixSuppr.setContentText("Choix: ");
+		choixSuppr.showAndWait();
+
+		String result = (String) choixSuppr.getSelectedItem();
+
+		System.out.println(result);
+		if(result != " "){
+			if(choixSuppr.equals("Oui")) {
+				modele.supprimerDef(x,y);
+			}
+			else {
+				choixSuppr.close();
+			}
 		};
 	}
 }

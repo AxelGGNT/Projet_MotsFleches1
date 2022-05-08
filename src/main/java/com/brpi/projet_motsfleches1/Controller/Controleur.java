@@ -1,4 +1,4 @@
-package com.brpi.projet_motsfleches1.Contrôleur;
+package com.brpi.projet_motsfleches1.Controller;
 
 import com.brpi.projet_motsfleches1.Modele.I_modeleGrille;
 import com.brpi.projet_motsfleches1.Vue.I_Grille;
@@ -41,8 +41,8 @@ public class Controleur implements I_Controleur{
      * @param y
      * @param libDef
      */
-    public void ajouterDef(int x, int y, String libDef){
-        boolean res = modele.ajouterDef(x,y,libDef);
+    public void ajouterDef(int x, int y, String libDef, String direction){
+        boolean res = modele.ajouterDef(x,y,libDef, direction);
         if (!res){
             grille.sendMessage(String.format("Erreur, une definition ne peut pas être ajoutée ici."));
         }

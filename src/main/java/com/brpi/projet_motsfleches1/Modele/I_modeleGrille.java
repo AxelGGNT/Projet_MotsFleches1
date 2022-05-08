@@ -13,7 +13,7 @@ public interface I_modeleGrille {
     void removeObservateur(I_Observateur o);
     void notifyObservateur();
     boolean ajouterMot(String mot, int x, int y, String direction);
-    boolean ajouterDef(int x, int y, String libDef);
+    boolean ajouterDef(int x, int y, String libDef, String direction);
     void supprimerDef(int x, int y);
     String getValueCase(int x, int y);
     int findCaseDispo(int x, int y, String direction);
